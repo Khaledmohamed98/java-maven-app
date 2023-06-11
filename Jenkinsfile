@@ -30,17 +30,14 @@ pipeline {
             }
         }
         stage('provision server') {
-            /*  
             environment {
                 AWS_ACCESS_KEY_ID = credentials('jenkins_aws_access_key_id')
                 AWS_SECRET_ACCESS_KEY = credentials('jenkins_aws_secret_access_key')
                 TF_VAR_env_prefix = 'test'
             }
-            */
             steps {
                 script {
                     echo 'provioning server .....'
-                    /*
                     dir('terraform') {
                         sh 'terraform init'
                         sh 'terraform apply --auto-approve'
@@ -49,7 +46,6 @@ pipeline {
                             returnStdout: true
                         ).trim()
                     }
-                    */
                 }
             }
         }
@@ -60,8 +56,6 @@ pipeline {
             steps {
                 script {
                     echo 'deploying app .... '
-
-                    /*
                     echo 'waiting for EC2 server to initialize' 
                     sleep(time: 90, unit: 'SECONDS') 
 
