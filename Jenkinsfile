@@ -30,15 +30,17 @@ pipeline {
             }
         }
         stage('provision server') {
-
-            echo 'start provisioning server ...'
-         /* environment {
+            /*  
+            environment {
                 AWS_ACCESS_KEY_ID = credentials('jenkins_aws_access_key_id')
                 AWS_SECRET_ACCESS_KEY = credentials('jenkins_aws_secret_access_key')
-                TF_VAR_env_prefix = 'test'   
+                TF_VAR_env_prefix = 'test'
             }
+            */
             steps {
                 script {
+                    echo 'provioning server .....'
+                    /*
                     dir('terraform') {
                         sh 'terraform init'
                         sh 'terraform apply --auto-approve'
@@ -47,18 +49,19 @@ pipeline {
                             returnStdout: true
                         ).trim()
                     }
+                    */
                 }
-            } */
+            }
         }
         stage('deploy') {
-
-            echo 'start deploying app ....'
-            
-           /* environment {
-                DOCKER_CREDS = credentials('docker-hub-repo')
+            environment {
+                DOCKER_CREDS = credentials('docker-hub-private-repo')
             }
             steps {
                 script {
+                    echo 'deploying app .... '
+
+                    /*
                     echo 'waiting for EC2 server to initialize' 
                     sleep(time: 90, unit: 'SECONDS') 
 
@@ -72,9 +75,10 @@ pipeline {
                         sh "scp -o StrictHostKeyChecking=no server-cmds.sh ${ec2Instance}:/home/ec2-user"
                         sh "scp -o StrictHostKeyChecking=no docker-compose.yaml ${ec2Instance}:/home/ec2-user"
                         sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${shellCmd}"
+                     */
                     }
                 }
-            } */
+            }
         }
     }
 }
