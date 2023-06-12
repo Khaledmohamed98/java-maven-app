@@ -1,5 +1,11 @@
 #!/usr/bin/groovy
 
+terraform {
+  backend "local" {
+    path = "home/jenkins/var/jenkins_home/terraform.tfstate"
+  }
+}
+
 pipeline {
     agent any
     tools {
@@ -39,7 +45,7 @@ pipeline {
                 script {
                     echo 'provioning server .....'
                     dir('terraform') {
-                        sh 'terraform init -reconfigure'
+                        sh 'terraform init'
                         sh 'terraform apply --auto-approve'
                         EC2_PUBLIC_IP = sh(
                             script: 'terraform output ec2_public_ip',
